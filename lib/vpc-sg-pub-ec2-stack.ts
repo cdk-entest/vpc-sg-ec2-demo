@@ -119,7 +119,7 @@ export class PubEc2 extends Stack {
 
     // user data
     publicEc2.addUserData(
-      fs.readFileSync("./lib/script/user-data-pub-ec2-web.sh", "utf8")
+      fs.readFileSync("./lib/script/user-dat.sh", "utf8")
     );
   }
 }
