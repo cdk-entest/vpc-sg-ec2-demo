@@ -12,6 +12,9 @@ date: 2022-08-06
 - Create an ec2 in a public subnet
 - Run a web in the ec2 port 80 and userdata
 
+![aws_devops-Expriment drawio(1)](https://user-images.githubusercontent.com/20411077/183353516-e2364444-5750-4ba5-893c-b8437e16257f.png)
+
+
 ## CDK Stack
 
 create a vpc
