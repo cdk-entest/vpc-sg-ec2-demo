@@ -97,9 +97,9 @@ export class PubEc2 extends Stack {
       )
     );
 
-    // private ec2 
+    // private ec2
 
-    // database 
+    // database
 
     // public subnet ec2
     const publicEc2 = new aws_ec2.Instance(this, "PubEc2Instance", {
@@ -122,6 +122,6 @@ export class PubEc2 extends Stack {
     });
 
     // user data
-    publicEc2.addUserData(fs.readFileSync("./lib/script/user-data.sh", "utf8"));
+    publicEc2.addUserData(fs.readFileSync("./lib/user-data.sh", "utf8"));
   }
 }
