@@ -3,6 +3,10 @@
 *.d.ts
 node_modules
 **/__pycache__
+test
+jest.config.js
+package-lock.json
+.npmignore
 
 # CDK asset staging directory
 .cdk.staging
