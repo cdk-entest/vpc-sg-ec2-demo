@@ -85,7 +85,7 @@ export class MultipleEc2Stack extends Stack {
       });
 
       // userdata text
-      let command = `export USER_NAME=${name}`;
+      let command = `export USER_NAME=${name} \n`;
       let text = fs.readFileSync("./lib/user-data.sh", "utf8");
       // add user data
       ec2.addUserData(command.concat(text));
