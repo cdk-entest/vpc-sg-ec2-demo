@@ -55,6 +55,8 @@ export class VpcSgPubEc2Stack extends Stack {
 
 interface PubEc2Props extends StackProps {
   vpc: aws_ec2.Vpc;
+  keyName?: string;
+  instanceName?: string;
 }
 
 export class PubEc2 extends Stack {
@@ -97,15 +99,11 @@ export class PubEc2 extends Stack {
       )
     );
 
-    // private ec2
-
-    // database
-
     // public subnet ec2
     const publicEc2 = new aws_ec2.Instance(this, "PubEc2Instance", {
       vpc: props.vpc,
       role: role,
-      instanceName: "PubEc2Instance",
+      instanceName: props.instanceName ? props.instanceName : "PubEc2Instance",
       instanceType: aws_ec2.InstanceType.of(
         aws_ec2.InstanceClass.T3,
         aws_ec2.InstanceSize.MICRO
@@ -115,11 +113,18 @@ export class PubEc2 extends Stack {
         edition: aws_ec2.AmazonLinuxEdition.STANDARD,
       }),
       securityGroup: sg,
+      keyName: props.keyName,
       vpcSubnets: {
         subnetType: aws_ec2.SubnetType.PUBLIC,
       },
       allowAllOutbound: true,
     });
+
+    // user data
+    const userData = aws_ec2.UserData.forLinux();
+    userData.addCommands(
+      `export USER_NAME=${props.instanceName ? props.instanceName : "haimtran"}`
+    );
 
     // user data
     publicEc2.addUserData(fs.readFileSync("./lib/user-data.sh", "utf8"));
