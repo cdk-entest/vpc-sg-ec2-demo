@@ -1,6 +1,6 @@
 #!/bin/bash
 cd ~
-https://github.com/cdk-entest/vpc-sg-ec2-demo/archive/refs/heads/main.zip
+wget https://github.com/cdk-entest/vpc-sg-ec2-demo/archive/refs/heads/main.zip
 unzip main.zip
 cd vpc-sg-ec2-demo-main
 cd web
