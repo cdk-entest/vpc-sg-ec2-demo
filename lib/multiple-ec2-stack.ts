@@ -85,11 +85,10 @@ export class MultipleEc2Stack extends Stack {
       });
 
       // userdata text
+      let command = `export USER_NAME=${name}`;
       let text = fs.readFileSync("./lib/user-data.sh", "utf8");
-      text = text.concat(`export USER_NAME=${name}`);
-
       // add user data
-      ec2.addUserData(text);
+      ec2.addUserData(command.concat(text));
     });
   }
 }
