@@ -12,12 +12,12 @@ try:
 except:
     USER_NAME = "Hai Tran"
 
+# @app.route("/")
+# def hello_world():
+#     return app.send_static_file("index.html")
+
+
 @app.route("/")
-def hello_world():
-    return app.send_static_file("index.html")
-
-
-@app.route("/host")
 def get_host():
     host = socket.gethostname()
     return render_template("host.html", host=host, username = USER_NAME)
