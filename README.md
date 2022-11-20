@@ -1,5 +1,5 @@
 ---
-title: VPC Security and EC2 Demo
+title: VPC EC2 Demo
 description: Launch an EC2 in a public subnet and host a web
 author: haimtran
 publishedDate: 08/06/2022
@@ -124,8 +124,46 @@ const publicEc2 = new aws_ec2.Instance(this, "PubEc2Instance", {
 });
 ```
 
-add user data
+add user data from commands
+
+```tsx
+let command = `export USER_NAME=${name} \n`;
+let text = fs.readFileSync("./lib/user-data.sh", "utf8");
+ec2.addUserData(command.concat(text));
+```
+
+add user data from file
 
 ```tsx
 publicEc2.addUserData(fs.readFileSync("./lib/user-data.sh", "utf8"));
+```
+
+## SSH Username and Pass
+
+```bash
+sudo passwd ec2-user
+```
+
+the enable ssh password in sshd_config file
+
+```bash
+sudo vim /etc/ssh/sshd_config
+```
+
+edit
+
+```text
+PasswordAuthentication yes
+```
+
+and optionally
+
+```text
+PermitRootLogin yes
+```
+
+finally need to reset ssh service
+
+```bash
+sudo sshd restart
 ```
