@@ -14,7 +14,6 @@ date: 2022-08-06
 
 ![Untitled Diagram drawio](https://user-images.githubusercontent.com/20411077/202877114-b5c32ef0-e17d-40a3-813d-84a7b5c337ab.png)
 
-
 ## CDK Stack
 
 create a vpc
@@ -137,6 +136,38 @@ add user data from file
 
 ```tsx
 publicEc2.addUserData(fs.readFileSync("./lib/user-data.sh", "utf8"));
+```
+
+## Multiple EC2
+
+using a loop to create multiple EC2 instances
+
+```tsx
+props.instanceNames.map((name) => {
+  let ec2 = new aws_ec2.Instance(this, name, {
+    vpc: vpc,
+    vpcSubnets: {
+      subnetType: aws_ec2.SubnetType.PUBLIC,
+    },
+    role: role,
+    securityGroup: sg,
+    instanceName: name,
+    instanceType: aws_ec2.InstanceType.of(
+      aws_ec2.InstanceClass.T3,
+      aws_ec2.InstanceSize.MICRO
+    ),
+    machineImage: new aws_ec2.AmazonLinuxImage({
+      generation: aws_ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
+      edition: aws_ec2.AmazonLinuxEdition.STANDARD,
+    }),
+  });
+
+  // userdata text
+  let command = `export USER_NAME=${name} \n`;
+  let text = fs.readFileSync("./lib/user-data.sh", "utf8");
+  // add user data
+  ec2.addUserData(command.concat(text));
+});
 ```
 
 ## SSH Username and Pass
