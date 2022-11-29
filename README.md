@@ -216,3 +216,7 @@ Retrieve the window password by uploading the key pair
 <img width="861" alt="Screen Shot 2022-11-29 at 09 01 57" src="https://user-images.githubusercontent.com/20411077/204420769-f346e3b4-80f2-454d-8336-2afa8fbdf2d8.png">
 
 
+## Troubleshooting 
+- Place EC2 in a public subnet with allocated IP address 
+- Security Group open port 80, 22, 3389
+- Role enable SSM 
