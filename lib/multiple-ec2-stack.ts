@@ -9,6 +9,7 @@ import * as fs from "fs";
 interface MultipleEc2Props extends StackProps {
   vpcId: string;
   vpcName: string;
+  keyName?: string;
   instanceNames: string[];
 }
 
@@ -42,6 +43,12 @@ export class MultipleEc2Stack extends Stack {
       "allow port 22 ssh from internet"
     );
 
+    sg.addIngressRule(
+      aws_ec2.Peer.anyIpv4(),
+      aws_ec2.Port.tcp(3389),
+      "allo window remote desktop"
+    );
+
     // create an iam role
     const role = new aws_iam.Role(this, "RoleForGroupEc2", {
       roleName: "RoleForGroupEc2",
@@ -51,7 +58,10 @@ export class MultipleEc2Stack extends Stack {
     role.addToPolicy(
       new aws_iam.PolicyStatement({
         effect: Effect.ALLOW,
-        resources: ["*"],
+        resources: [
+          "arn:aws:s3:::haimtran-workspace",
+          "arn:aws:s3:::haimtran-workspace/*",
+        ],
         actions: ["s3:*"],
       })
     );
@@ -64,16 +74,39 @@ export class MultipleEc2Stack extends Stack {
       )
     );
 
-    // create multiple ec2 instances
+    // create multiple ec2 instances window
     props.instanceNames.map((name) => {
-      let ec2 = new aws_ec2.Instance(this, name, {
+      let ec2Window = new aws_ec2.Instance(this, `${name}-window`, {
         vpc: vpc,
         vpcSubnets: {
           subnetType: aws_ec2.SubnetType.PUBLIC,
         },
         role: role,
         securityGroup: sg,
-        instanceName: name,
+        keyName: props.keyName,
+        instanceName: `${name}-window`,
+        instanceType: aws_ec2.InstanceType.of(
+          aws_ec2.InstanceClass.T3,
+          aws_ec2.InstanceSize.LARGE
+        ),
+        machineImage: new aws_ec2.WindowsImage(
+          aws_ec2.WindowsVersion.WINDOWS_SERVER_2022_ENGLISH_FULL_BASE
+        ),
+      });
+
+      ec2Window.addUserData("");
+    });
+
+    // create multiple ec2 instances
+    props.instanceNames.map((name) => {
+      let ec2 = new aws_ec2.Instance(this, `${name}-linux`, {
+        vpc: vpc,
+        vpcSubnets: {
+          subnetType: aws_ec2.SubnetType.PUBLIC,
+        },
+        role: role,
+        securityGroup: sg,
+        instanceName: `${name}-linux`,
         instanceType: aws_ec2.InstanceType.of(
           aws_ec2.InstanceClass.T3,
           aws_ec2.InstanceSize.MICRO

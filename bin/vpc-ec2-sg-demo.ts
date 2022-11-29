@@ -30,7 +30,8 @@ ec2.addDependency(vpc);
 new MultipleEc2Stack(app, "MultipleEc2Stack", {
   vpcId: "vpc-07cafc6a819930727",
   vpcName: "FabbiDemo",
-  instanceNames: ["hai", "ha", "min", "shane"],
+  keyName: "haimtranEc2KeyPair",
+  instanceNames: ["Hai"],
   env: {
     region: REGION,
     account: process.env.CDK_DEFAULT_ACCOUNT,
