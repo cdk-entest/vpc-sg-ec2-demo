@@ -202,14 +202,17 @@ sudo sshd restart
 
 ## Remote Desktop Connect Window 
 
-Install microsoft remote desktop (app for mac). Then download the RDP file from aws console 
+Install microsoft remote desktop (app for mac). 
 
-<img width="861" alt="Screen Shot 2022-11-29 at 09 01 57" src="https://user-images.githubusercontent.com/20411077/204420533-55901642-331d-46d6-ba04-a0d698560e9d.png">
-
-Retrieve the password to connect 
-<img width="861" alt="Screen Shot 2022-11-29 at 09 01 47" src="https://user-images.githubusercontent.com/20411077/204420586-d7e6720c-742e-4daa-bd47-5f25985cacf2.png">
+Then download the RDP file from aws console 
 
 
+<img width="861" alt="Screen Shot 2022-11-29 at 09 01 47" src="https://user-images.githubusercontent.com/20411077/204420717-59ee0ecf-b64b-4e93-97c9-f7195a5abf54.png">
 
+
+Retrieve the window password by uploading the key pair 
+
+
+<img width="861" alt="Screen Shot 2022-11-29 at 09 01 57" src="https://user-images.githubusercontent.com/20411077/204420769-f346e3b4-80f2-454d-8336-2afa8fbdf2d8.png">
 
 
