@@ -30,7 +30,7 @@ const ec2 = new PubEc2(app, "PubEc2", {
 ec2.addDependency(vpc);
 
 // create multiple ec2
-new MultipleEc2Stack(app, "MultipleEc2Stack", {
+const multipleEc2 = new MultipleEc2Stack(app, "MultipleEc2Stack", {
   vpcId: "vpc-07cafc6a819930727",
   vpcName: "FabbiDemo",
   keyName: "haimtranEc2KeyPair",
@@ -43,6 +43,13 @@ new MultipleEc2Stack(app, "MultipleEc2Stack", {
 
 // cloudwatch alarm to stop idel instance
 // please provide instance ids here
-new CloudwatchEc2Stack(app, "CloudWatchAlarmStopIdleEc2Stack", {
-  instanceId: "i-06fae6d57c56548a9",
+const cloudwatch = new CloudwatchEc2Stack(app, "CloudWatchStack", {
+  instanceId: multipleEc2.linuxInstanceIds[0],
+  topicArn: `arn:aws:sns:ap-southeast-1:${process.env.CDK_DEFAULT_ACCOUNT}:MonitorEc2`,
+  env: {
+    region: REGION,
+    account: process.env.CDK_DEFAULT_ACCOUNT,
+  },
 });
+
+cloudwatch.addDependency(multipleEc2);
