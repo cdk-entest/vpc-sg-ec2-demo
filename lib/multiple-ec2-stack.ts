@@ -14,6 +14,9 @@ interface MultipleEc2Props extends StackProps {
 }
 
 export class MultipleEc2Stack extends Stack {
+  public readonly linuxInstanceIds: string[] = [];
+  public readonly windowInstanceIds: string[] = [];
+
   constructor(scope: Construct, id: string, props: MultipleEc2Props) {
     super(scope, id, props);
 
@@ -95,6 +98,9 @@ export class MultipleEc2Stack extends Stack {
       });
 
       ec2Window.addUserData("");
+
+      // save instance ids
+      this.windowInstanceIds.push(ec2Window.instanceId);
     });
 
     // create multiple ec2 instances
@@ -122,6 +128,8 @@ export class MultipleEc2Stack extends Stack {
       let text = fs.readFileSync("./lib/user-data.sh", "utf8");
       // add user data
       ec2.addUserData(command.concat(text));
+      // save instance ids
+      this.linuxInstanceIds.push(ec2.instanceId);
     });
   }
 }

@@ -30,15 +30,15 @@ export class CloudwatchEc2Stack extends Stack {
           aws_cloudwatch.ComparisonOperator.LESS_THAN_THRESHOLD,
         threshold: 0.99,
         // how many data points (evaluation periods)
-        evaluationPeriods: 3,
+        evaluationPeriods: 6,
         // means 5 out of 6 data points
-        datapointsToAlarm: 1,
+        datapointsToAlarm: 4,
         metric: new aws_cloudwatch.Metric({
           namespace: "AWS/EC2",
           metricName: "CPUUtilization",
           statistic: "Average",
           // average within 5 minutes to get 1 data point
-          period: Duration.seconds(60),
+          period: Duration.minutes(5),
           dimensionsMap: {
             InstanceId: props.instanceId,
           },
@@ -56,15 +56,15 @@ export class CloudwatchEc2Stack extends Stack {
           aws_cloudwatch.ComparisonOperator.GREATER_THAN_THRESHOLD,
         threshold: 5.0,
         // how many data points (evaluation periods)
-        evaluationPeriods: 6,
-        // means 5 out of 6 data points
-        datapointsToAlarm: 4,
+        evaluationPeriods: 3,
+        // means 1 out of 3 data points
+        datapointsToAlarm: 1,
         metric: new aws_cloudwatch.Metric({
           namespace: "AWS/EC2",
           metricName: "CPUUtilization",
           statistic: "Average",
-          // average within 5 minutes to get 1 data point
-          period: Duration.minutes(5),
+          // average within 1 minutes to get 1 data point
+          period: Duration.minutes(1),
           dimensionsMap: {
             InstanceId: props.instanceId,
           },
