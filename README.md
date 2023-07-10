@@ -275,3 +275,9 @@ Retrieve the window password by uploading the key pair
 - Place EC2 in a public subnet with allocated IP address
 - Security Group open port 80, 22, 3389
 - Role enable SSM
+
+## Reference
+
+- [system manager and session manager](https://docs.aws.amazon.com/systems-manager/latest/userguide/what-is-systems-manager.html)
+
+- [session manager requirements](https://docs.aws.amazon.com/systems-manager/latest/userguide/session-manager-prerequisites.html)
