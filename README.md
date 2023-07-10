@@ -258,6 +258,11 @@ set re=0
 syntax on
 ```
 
+## Session Manager
+
+![vpc-ec2-ssm-role](https://github.com/cdk-entest/vpc-sg-ec2-demo/assets/20411077/fb1a615e-61e7-4cea-a279-4ce6639dafd3)
+
+
 ## Remote Desktop Connect Window
 
 Install microsoft remote desktop (app for mac).
