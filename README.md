@@ -12,7 +12,7 @@ date: 2022-08-06
 - Create an ec2 in a public subnet
 - Run a web in the ec2 port 80 and userdata
 
-![Untitled Diagram drawio](https://user-images.githubusercontent.com/20411077/202877114-b5c32ef0-e17d-40a3-813d-84a7b5c337ab.png)
+![vpc-sg-ec2](https://github.com/cdk-entest/vpc-sg-ec2-demo/assets/20411077/e80c2471-b24a-4694-a2e3-18f8ad212bfa)
 
 ## CDK Stack
 
