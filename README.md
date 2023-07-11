@@ -6,11 +6,13 @@ publishedDate: 08/06/2022
 date: 2022-08-06
 ---
 
-## VPC Security Group and EC2 Demo
+## Introduction
 
 - Create a vpc
 - Create an ec2 in a public subnet
 - Run a web in the ec2 port 80 and userdata
+- Session Manager
+- Flask app converts text to speed using Amazon Polly and S3 [here](https://github.com/cdk-entest/flask-tailwind-polly)
 
 ![vpc-sg-ec2](https://github.com/cdk-entest/vpc-sg-ec2-demo/assets/20411077/e80c2471-b24a-4694-a2e3-18f8ad212bfa)
 
@@ -138,6 +140,35 @@ add user data from file
 publicEc2.addUserData(fs.readFileSync("./lib/user-data.sh", "utf8"));
 ```
 
+## User Data
+
+userdata-1 a simple web using flask
+
+```
+cd ~
+wget https://github.com/cdk-entest/vpc-sg-ec2-demo/archive/refs/heads/main.zip
+unzip main.zip
+cd vpc-sg-ec2-demo-main
+cd web
+python3 -m pip install --user -r requirements.txt
+python3 -m app
+```
+
+userdata -2 a simple web using flask and access to S3 and Polly to convert text to speech
+
+```
+#!/bin/bash
+cd ~
+wget https://github.com/cdk-entest/flask-tailwind-polly/archive/refs/heads/master.zip
+unzip master.zip
+cd flask-tailwind-polly-master
+python3 -m ensurepip --upgrade
+python3 -m pip install -r requirements.txt
+cd app
+export BUCKET_NAME=""
+python3 -m app
+```
+
 ## Multiple EC2
 
 using a loop to create multiple EC2 instances
@@ -168,36 +199,6 @@ props.instanceNames.map((name) => {
   // add user data
   ec2.addUserData(command.concat(text));
 });
-```
-
-## SSH Username and Pass
-
-```bash
-sudo passwd ec2-user
-```
-
-the enable ssh password in sshd_config file
-
-```bash
-sudo vim /etc/ssh/sshd_config
-```
-
-edit
-
-```text
-PasswordAuthentication yes
-```
-
-and optionally
-
-```text
-PermitRootLogin yes
-```
-
-finally need to reset ssh service
-
-```bash
-sudo sshd restart
 ```
 
 ## Basic Vim
@@ -259,10 +260,41 @@ syntax on
 ```
 
 ## Session Manager
+
 - Connect to EC2 via Session Manager
 - EC2 instance profile assume IAM role
 
 ![vpc-ec2-ssm-role](https://github.com/cdk-entest/vpc-sg-ec2-demo/assets/20411077/2864c841-7311-4c65-9f9f-0d259df5cd47)
+
+## SSH Configuration
+
+```bash
+sudo passwd ec2-user
+```
+
+the enable ssh password in sshd_config file
+
+```bash
+sudo vim /etc/ssh/sshd_config
+```
+
+edit
+
+```text
+PasswordAuthentication yes
+```
+
+and optionally
+
+```text
+PermitRootLogin yes
+```
+
+finally need to reset ssh service
+
+```bash
+sudo sshd restart
+```
 
 ## Remote Desktop Connect Window
 
