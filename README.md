@@ -259,9 +259,10 @@ syntax on
 ```
 
 ## Session Manager
+- Connect to EC2 via Session Manager
+- EC2 instance profile assume IAM role
 
-![vpc-ec2-ssm-role](https://github.com/cdk-entest/vpc-sg-ec2-demo/assets/20411077/fb1a615e-61e7-4cea-a279-4ce6639dafd3)
-
+![vpc-ec2-ssm-role](https://github.com/cdk-entest/vpc-sg-ec2-demo/assets/20411077/2864c841-7311-4c65-9f9f-0d259df5cd47)
 
 ## Remote Desktop Connect Window
 
